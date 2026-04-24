@@ -1,0 +1,31 @@
+name: DevSecOps Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Instalación de dependencias
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Análisis SAST (Semgrep)
+        # Escaneo estático de código para buscar SQLi o XSS
+        run: |
+          pip install semgrep
+          semgrep --config=auto --error
+
+      - name: Análisis SCA (pip-audit)
+        # Escaneo de librerías con vulnerabilidades conocidas
+        run: |
+          pip install pip-audit
+          pip-audit -r requirements.txt
