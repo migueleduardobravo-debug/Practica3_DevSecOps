@@ -19,17 +19,16 @@ jobs:
           pip install -r requirements.txt
 
       - name: Análisis SAST (Semgrep)
-        # Escaneo estático de código para buscar SQLi o XSS
         run: |
           pip install semgrep
-          semgrep --config=auto --error --verbose || true
+          semgrep --config=auto --verbose || true
 
       - name: Análisis SCA (pip-audit)
-        # Escaneo de librerías con vulnerabilidades conocidas
         run: |
           pip install pip-audit
           pip-audit -r requirements.txt
- dast-scan:
+
+  dast-scan:
     runs-on: ubuntu-latest
     needs: security-scan
     steps:
