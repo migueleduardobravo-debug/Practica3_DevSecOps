@@ -9,7 +9,8 @@ app.debug = True
 def login():
     username = request.form.get('username')
     # VULNERABILIDAD: Inyección SQL (CWE-89) - Concatenación directa
-    query = "SELECT * FROM users WHERE username = '" + username + "'"
+    query = "SELECT * FROM users WHERE username = ?"
+    user = conn.execute(query, (username,)).fetchone()
     
     # Simulación de consulta para que el pipeline detecte el patrón inseguro
     return query
