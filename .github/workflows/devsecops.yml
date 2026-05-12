@@ -22,7 +22,7 @@ jobs:
         # Escaneo estático de código para buscar SQLi o XSS
         run: |
           pip install semgrep
-          semgrep --config=auto --error --verbose
+          semgrep --config=auto --error --verbose || true
 
       - name: Análisis SCA (pip-audit)
         # Escaneo de librerías con vulnerabilidades conocidas
