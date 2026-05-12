@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
@@ -22,7 +22,7 @@ jobs:
         # Escaneo estático de código para buscar SQLi o XSS
         run: |
           pip install semgrep
-          semgrep --config=auto --error
+          semgrep --config=auto --error --verbose
 
       - name: Análisis SCA (pip-audit)
         # Escaneo de librerías con vulnerabilidades conocidas
