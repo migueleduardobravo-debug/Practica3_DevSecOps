@@ -19,7 +19,7 @@ def login():
 def hello():
     name = request.args.get('name', 'Guest')
     # VULNERABILIDAD: XSS Reflejado (CWE-79) - Renderizado sin escape
-    return render_template_string(f"<h1>Hola {name}</h1>")
+    return render_template(f"<h1>Hola {name}</h1>")
 
 if __name__ == '__main__':
     app.run()
