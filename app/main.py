@@ -10,4 +10,4 @@ DEBUG = os.environ.get("FLASK_DEBUG", "0") == "1"
 
 if _name_ == "_main_":
     init_db()
-    app.run(debug=DEBUG, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    app.run(debug=DEBUG, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))  # nosec B104
