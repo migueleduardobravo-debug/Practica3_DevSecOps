@@ -2,7 +2,15 @@
 
 **Equipo:** Miguel Bravo Figueroa & Jesús del Salto Díaz  
 **Máster en Ciberseguridad — UNIE Universidad**  
-**URL pública:** https://practica3-devsecops-p3.onrender.com/login  
+**URL pública:** https://practica3-devsecops-p3.onrender.com/login
+
+**Credenciales de prueba:**
+
+| Usuario | Contraseña | Rol |
+|---------|-----------|-----|
+| admin   | admin123  | Administrador |
+| bob     | password2 | Owner |
+| alice   | password1 | User |/login  
 **Credenciales de prueba:** `admin` / `admin123`  
 **Repositorio:** https://github.com/migueleduardobravo-debug/Practica3_DevSecOps  
 
