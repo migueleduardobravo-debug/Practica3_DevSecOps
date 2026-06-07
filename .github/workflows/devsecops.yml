@@ -23,8 +23,8 @@ jobs:
       - name: Run Semgrep
         run: |
           echo "=== SEMGREP SAST SCAN ==="
-          semgrep --config=auto --severity=ERROR --json --output=semgrep-report.json app/ || SEMGREP_EXIT=$?
-          semgrep --config=auto --severity=ERROR app/
+          semgrep --config=p/python --json --output=semgrep-report.json app/ || SEMGREP_EXIT=$?
+          semgrep --config=p/python app/
           exit ${SEMGREP_EXIT:-0}
       - name: Upload SAST report
         if: always()
