@@ -8,6 +8,6 @@ from init_db import init_db
 # Desarrollo local: FLASK_DEBUG=1 -> debug=True
 DEBUG = os.environ.get("FLASK_DEBUG", "0") == "1"
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     init_db()
     app.run(debug=DEBUG, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))  # nosec B104

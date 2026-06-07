@@ -4,7 +4,7 @@ from flask import jsonify, request, session, redirect
 from db import get_db
 from server import app
 
-logger = logging.getLogger(_name_)
+logger = logging.getLogger(__name__)
 
 
 @app.route("/companies", methods=["GET"])
