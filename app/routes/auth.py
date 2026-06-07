@@ -1,4 +1,4 @@
-"""Authentication routes — VULNERABLE VERSION (pre-remediation)."""
+"""Authentication routes — post-remediation."""
 from flask import flash, redirect, render_template, request, session
 from db import get_db
 from server import app
@@ -10,16 +10,22 @@ def login():
         return redirect("/dashboard")
 
     if request.method == "POST":
-        username = request.form.get("username", "")
+        username = request.form.get("username", "").strip()
         password = request.form.get("password", "")
 
         conn = get_db()
-        # CWE-89: SQL Injection — string concatenation in SQL query
-        query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
-        user = conn.execute(query).fetchone()
-        conn.close()
+        try:
+            # CWE-89 fix: consulta parametrizada
+            # El driver SQLite trata username/password como datos, nunca como SQL
+            user = conn.execute(
+                "SELECT id, username, role FROM users WHERE username = ? AND password = ?",
+                (username, password),
+            ).fetchone()
+        finally:
+            conn.close()
 
         if user:
+            session.clear()
             session["user_id"] = user["id"]
             session["username"] = user["username"]
             session["role"] = user["role"]
