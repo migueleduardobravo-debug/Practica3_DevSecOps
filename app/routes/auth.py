@@ -1,5 +1,6 @@
 """Authentication routes — post-remediation."""
 from flask import flash, redirect, render_template, request, session
+from werkzeug.security import check_password_hash
 from db import get_db
 from server import app
 
@@ -15,16 +16,14 @@ def login():
 
         conn = get_db()
         try:
-            # CWE-89 fix: consulta parametrizada
-            # El driver SQLite trata username/password como datos, nunca como SQL
             user = conn.execute(
-                "SELECT id, username, role FROM users WHERE username = ? AND password = ?",
-                (username, password),
+                "SELECT id, username, password, role FROM users WHERE username = ?",
+                (username,),
             ).fetchone()
         finally:
             conn.close()
 
-        if user:
+        if user and check_password_hash(user["password"], password):
             session.clear()
             session["user_id"] = user["id"]
             session["username"] = user["username"]
