@@ -18,20 +18,27 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Install Semgrep
-        run: pip install semgrep
-      - name: Run Semgrep
+      - name: Install SAST tools
+        run: pip install semgrep bandit
+      - name: Run Semgrep (informativo)
         run: |
           echo "=== SEMGREP SAST SCAN ==="
-          semgrep --config=p/python --json --output=semgrep-report.json app/ || SEMGREP_EXIT=$?
-          semgrep --config=p/python app/
-          exit ${SEMGREP_EXIT:-0}
-      - name: Upload SAST report
+          semgrep --config=p/python --json --output=semgrep-report.json app/ || true
+          semgrep --config=p/python app/ || true
+      - name: Run Bandit (bloqueante)
+        run: |
+          echo "=== BANDIT SAST SCAN ==="
+          bandit -r app/ -ll -f json -o bandit-report.json || BANDIT_EXIT=$?
+          bandit -r app/ -ll
+          exit ${BANDIT_EXIT:-0}
+      - name: Upload SAST reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: sast-report
-          path: semgrep-report.json
+          path: |
+            semgrep-report.json
+            bandit-report.json
 
   sca:
     name: SCA - pip-audit
