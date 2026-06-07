@@ -1,9 +1,36 @@
 {% extends "base.html" %}
+
+{% block title %}Login — NovaCorp{% endblock %}
+
 {% block content %}
-<h2>Login</h2>
-<form method="POST">
-    <input type="text" name="username" placeholder="Username" required>
-    <input type="password" name="password" placeholder="Password" required>
-    <button type="submit">Login</button>
-</form>
+<div class="d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+    <div class="card shadow-lg" style="min-width: 380px; max-width: 420px;">
+        <div class="card-header text-bg-dark text-center">
+            <h4 class="mb-0"><i class="bi bi-building"></i> NovaCorp Platform</h4>
+            <small class="text-light">Company Management System</small>
+        </div>
+        <div class="card-body p-4">
+            <form method="post" action="/login?next={{ next_url }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        <input class="form-control" type="text" name="username" placeholder="Enter username" required autofocus>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-key"></i></span>
+                        <input class="form-control" type="password" name="password" placeholder="Enter password" required>
+                    </div>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-door-open"></i> Sign In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
